@@ -1,8 +1,7 @@
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import "./OddColor.scss";
 import { useState } from "react";
 
-// RGB will be between [0.0,1.0]
 interface ColorButtonProps {
   color: { l: number; a: number; b: number };
   action: () => void;
@@ -68,8 +67,8 @@ const OddColor = () => {
   // select random color
   const randomColor = {
     l: Math.random() * 0.8 + 0.1, // l is between [0.1,0.9]
-    a: Math.random() * 2.0 - 1.0, // a is between [-1,1]
-    b: Math.random() * 2.0 - 1.0, // b is between [-1,1]
+    a: Math.random() * 1.8 - 0.9, // a is between [-0.8,0.8]
+    b: Math.random() * 1.8 - 0.9, // b is between [-0.8,0.8]
   };
 
   const correct = () => {
