@@ -39,12 +39,14 @@ const Grid = (props: GridProps) => {
 
   // insert 1 odd button
   const answer = Math.floor(Math.random() * 9);
-  const offset = (x: number, offset: number) =>
-    x + (Math.random() * offset - offset / 2);
+  const offset = (x: number, offset: number) => {
+    const sign = Math.random() > 0.5 ? 1 : -1;
+    return x + sign * offset;
+  };
   const offColor = {
-    l: offset(props.color.l, 0.15),
-    a: offset(props.color.a, 0.15),
-    b: offset(props.color.b, 0.15),
+    l: offset(props.color.l, 0.05),
+    a: offset(props.color.a, 0.05),
+    b: offset(props.color.b, 0.05),
   };
   buttons.splice(
     answer,
