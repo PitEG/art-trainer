@@ -4,18 +4,18 @@ import { useState } from "react";
 
 // RGB will be between [0.0,1.0]
 interface ColorButtonProps {
-  color: { r: number; g: number; b: number };
+  color: { l: number; a: number; b: number };
   action: () => void;
 }
 
 const ColorButton = (props: ColorButtonProps) => {
-  const r = props.color.r;
-  const g = props.color.g;
+  const l = props.color.l;
+  const a = props.color.a;
   const b = props.color.b;
 
   const styles = {
-    background: `rgb(${r * 255},${g * 255},${b * 255})`,
-    border: `rgb(${r * 255},${g * 255},${b * 255})`,
+    background: `lab(${l * 100.0} ${a * 100.0} ${b * 100.0})`,
+    border: `lab(${l * 100.0} ${a * 100.0} ${b * 100.0})`,
   };
   return (
     <Button className="ColorButton" style={styles} onClick={props.action}>
@@ -25,7 +25,7 @@ const ColorButton = (props: ColorButtonProps) => {
 };
 
 interface GridProps {
-  color: { r: number; g: number; b: number };
+  color: { l: number; a: number; b: number };
   difficulty: number;
   onCorrect: () => void;
   onWrong: () => void;
@@ -42,15 +42,17 @@ const Grid = (props: GridProps) => {
   const offset = (x: number, offset: number) =>
     x + (Math.random() * offset - offset / 2);
   const offColor = {
-    r: offset(props.color.r, 0.2),
-    g: offset(props.color.g, 0.2),
-    b: offset(props.color.b, 0.2),
+    l: offset(props.color.l, 0.15),
+    a: offset(props.color.a, 0.15),
+    b: offset(props.color.b, 0.15),
   };
   buttons.splice(
     answer,
     0,
     <ColorButton color={offColor} action={props.onCorrect} />,
   );
+  console.log("normal:", props.color);
+  console.log("odd:", offColor);
 
   return (
     <Container>
@@ -62,7 +64,11 @@ const Grid = (props: GridProps) => {
 const OddColor = () => {
   const [score, setScore] = useState(0);
   // select random color
-  const randomColor = { r: Math.random(), g: Math.random(), b: Math.random() };
+  const randomColor = {
+    l: Math.random() * 0.8 + 0.1, // l is between [0.1,0.9]
+    a: Math.random() * 2.0 - 1.0, // a is between [-1,1]
+    b: Math.random() * 2.0 - 1.0, // b is between [-1,1]
+  };
 
   const correct = () => {
     setScore(score + 1);
@@ -78,6 +84,9 @@ const OddColor = () => {
     <Container>
       <h1>Odd Color</h1>
       <h2>{score}</h2>
+      <h2> L:{randomColor.l} </h2>
+      <h2> A:{randomColor.a} </h2>
+      <h2> B:{randomColor.b} </h2>
       <Grid
         color={randomColor}
         difficulty={1}
