@@ -9,9 +9,6 @@ interface ColorButtonProps {
 }
 
 const ColorButton = (props: ColorButtonProps) => {
-  const action = () => {
-    console.log(r, g, b);
-  };
   const r = props.color.r;
   const g = props.color.g;
   const b = props.color.b;
@@ -21,7 +18,7 @@ const ColorButton = (props: ColorButtonProps) => {
     border: `rgb(${r * 255},${g * 255},${b * 255})`,
   };
   return (
-    <Button className="ColorButton" style={styles} onClick={action}>
+    <Button className="ColorButton" style={styles} onClick={props.action}>
       <h1>Color Button</h1>
     </Button>
   );
@@ -30,56 +27,63 @@ const ColorButton = (props: ColorButtonProps) => {
 interface GridProps {
   color: { r: number; g: number; b: number };
   difficulty: number;
+  onCorrect: () => void;
+  onWrong: () => void;
 }
 
 const Grid = (props: GridProps) => {
+  // make 8 regular buttons
+  const buttons = Array.from({ length: 8 }, () => (
+    <ColorButton color={props.color} action={props.onWrong} />
+  ));
+
+  // insert 1 odd button
+  const answer = Math.floor(Math.random() * 9);
+  const offset = (x: number, offset: number) =>
+    x + (Math.random() * offset - offset / 2);
+  const offColor = {
+    r: offset(props.color.r, 0.2),
+    g: offset(props.color.g, 0.2),
+    b: offset(props.color.b, 0.2),
+  };
+  buttons.splice(
+    answer,
+    0,
+    <ColorButton color={offColor} action={props.onCorrect} />,
+  );
+
   return (
     <Container>
-      <Row>
-        <Col>{buttons[0]}</Col>
-        <Col>{buttons[1]}</Col>
-        <Col>{buttons[2]}</Col>
-      </Row>
-      <Row>
-        <Col>{buttons[3]}</Col>
-        <Col>{buttons[4]}</Col>
-        <Col>{buttons[5]}</Col>
-      </Row>
-      <Row>
-        <Col>{buttons[6]}</Col>
-        <Col>{buttons[7]}</Col>
-        <Col>{buttons[8]}</Col>
-      </Row>
+      <div>{buttons}</div>
     </Container>
   );
 };
 
 const OddColor = () => {
-  const randomizeButtons = (buttons: any[]) => {
-    let newButtons = Array.from({ length: buttons.length }, () => {
-      <ColorButton
-        color={{ r: 0.5, g: 0.5, b: 0.5 }}
-        action={randomizeButtons}
-      />;
-      return newButtons;
-    });
+  const [score, setScore] = useState(0);
+  // select random color
+  const randomColor = { r: Math.random(), g: Math.random(), b: Math.random() };
+
+  const correct = () => {
+    setScore(score + 1);
+    console.log("correct");
   };
 
-  const [buttons, setButtons] = useState(newButtons);
-
-  const randomizeOddColor = () => {
-    let buttonsCopy = [...buttons];
-    let answer = Math.floor(Math.random() * 9);
-    buttonsCopy[answer] = <ColorButton color={{ r: 0.9, g: 0.2, b: 0.5 }} />;
-    setButtons(buttonsCopy);
+  const wrong = () => {
+    setScore(0);
+    console.log("wrong");
   };
-
-  // randomize one color
 
   return (
     <Container>
       <h1>Odd Color</h1>
-      <Grid color={{ r: 0.9, g: 0.2, b: 0.5 }} difficulty={1} />
+      <h2>{score}</h2>
+      <Grid
+        color={randomColor}
+        difficulty={1}
+        onCorrect={correct}
+        onWrong={wrong}
+      />
     </Container>
   );
 };
