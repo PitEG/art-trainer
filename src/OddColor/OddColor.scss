@@ -1,4 +1,22 @@
-.ColorButton {
+.odd-color-button {
   //width: 100px;
-  height: 200px;
+  height: 150px;
+  height: 150px;
+  border-radius: 0;
+  margin: 2px;
+}
+
+.odd-color-grid {
+  display: grid;
+  grid: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+.odd-color-game-over {
+  h1 {
+    text-align: center;
+  }
+
+  h3 {
+    text-align: center;
+  }
 }

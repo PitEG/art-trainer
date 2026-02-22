@@ -17,7 +17,7 @@ const ColorButton = (props: ColorButtonProps) => {
     border: `lab(${l * 100.0} ${a * 100.0} ${b * 100.0})`,
   };
   return (
-    <Button className="ColorButton" style={styles} onClick={props.action}>
+    <Button className="odd-color-button" style={styles} onClick={props.action}>
       <h1>Color Button</h1>
     </Button>
   );
@@ -56,14 +56,15 @@ const Grid = (props: GridProps) => {
   console.log("odd:", offColor);
 
   return (
-    <Container>
-      <div>{buttons}</div>
+    <Container className="odd-color-grid justify-content-center">
+      {buttons}
     </Container>
   );
 };
 
 const OddColor = () => {
   const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
   // select random color
   const randomColor = {
     l: Math.random() * 0.8 + 0.1, // l is between [0.1,0.9]
@@ -77,23 +78,43 @@ const OddColor = () => {
   };
 
   const wrong = () => {
-    setScore(0);
+    setGameOver(true);
     console.log("wrong");
   };
 
-  return (
-    <Container>
-      <h1>Odd Color</h1>
-      <h2>{score}</h2>
-      <h2> L:{randomColor.l} </h2>
-      <h2> A:{randomColor.a} </h2>
-      <h2> B:{randomColor.b} </h2>
+  const reset = () => {
+    setGameOver(false);
+    setScore(0);
+  };
+
+  const gameOverScreen = (
+    <div className="odd-color-game-over d-flex row justify-content-center">
+      <h1>GAME OVER, MAN</h1>
+      <h3> try again? </h3>
+      <Button onClick={reset}> yeah </Button>
+    </div>
+  );
+
+  const gameScreen = (
+    <div>
       <Grid
         color={randomColor}
         difficulty={1}
         onCorrect={correct}
         onWrong={wrong}
       />
+      <h1> DEBUG </h1>
+      <h2> L:{randomColor.l} </h2>
+      <h2> A:{randomColor.a} </h2>
+      <h2> B:{randomColor.b} </h2>
+    </div>
+  );
+
+  return (
+    <Container>
+      <h1>Odd Color</h1>
+      <h2>{score}</h2>
+      {gameOver ? gameOverScreen : gameScreen}
     </Container>
   );
 };
