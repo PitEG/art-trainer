@@ -15,9 +15,11 @@ const ColorButton = (props: ColorButtonProps) => {
     border: `lab(${l * 100.0} ${a * 100.0} ${b * 100.0})`,
   };
   return (
-    <Button className="odd-color-button" style={styles} onClick={props.action}>
-      <h1>Color Button</h1>
-    </Button>
+    <Button
+      className="odd-color-button"
+      style={styles}
+      onClick={props.action}
+    ></Button>
   );
 };
 

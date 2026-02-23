@@ -1,14 +1,11 @@
 .odd-color-button {
-  //width: 100px;
-  height: 150px;
-  height: 150px;
   border-radius: 0;
-  margin: 2px;
 }
 
 .odd-color-grid {
   display: grid;
   grid: repeat(3, 1fr) / repeat(3, 1fr);
+  height: 450px;
 }
 
 .odd-color-game-over {
@@ -16,7 +13,11 @@
     text-align: center;
   }
 
-  h3 {
+  h2 {
     text-align: center;
   }
+
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 100%;
 }

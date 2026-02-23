@@ -1,8 +1,15 @@
 import { Container } from "react-bootstrap";
 import ColorButton from "./ColorButton";
 
+interface Color {
+  l: number;
+  a: number;
+  b: number;
+}
+
 interface GridProps {
-  color: { l: number; a: number; b: number };
+  color: Color;
+  oddColor: Color;
   difficulty: number;
   onCorrect: () => void;
   onWrong: () => void;
@@ -16,22 +23,13 @@ const Grid = (props: GridProps) => {
 
   // insert 1 odd button
   const answer = Math.floor(Math.random() * 9);
-  const offset = (x: number, offset: number) => {
-    const sign = Math.random() > 0.5 ? 1 : -1;
-    return x + sign * offset;
-  };
-  const offColor = {
-    l: offset(props.color.l, 0.05),
-    a: offset(props.color.a, 0.05),
-    b: offset(props.color.b, 0.05),
-  };
   buttons.splice(
     answer,
     0,
-    <ColorButton color={offColor} action={props.onCorrect} />,
+    <ColorButton color={props.oddColor} action={props.onCorrect} />,
   );
   console.log("normal:", props.color);
-  console.log("odd:", offColor);
+  console.log("odd:", props.oddColor);
 
   return (
     <Container className="odd-color-grid justify-content-center">

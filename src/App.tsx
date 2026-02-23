@@ -2,18 +2,16 @@ import "./App.scss";
 import { Outlet, BrowserRouter, Routes, Route } from "react-router";
 import { Container } from "react-bootstrap";
 import OddColor from "./OddColor/OddColor";
+import TopBar from "./TopBar";
+import Home from "./Home";
 
 const Root = () => {
   return (
     <Container>
-      <h1> ROOT </h1>
+      <TopBar />
       <Outlet />
     </Container>
   );
-};
-
-const Home = () => {
-  return <h1>HOME</h1>;
 };
 
 const Page = () => {
