@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build docker image
-        run: docker build . -t ghcr.io/piteg/art-games:latest art-games
+        run: docker build . -t ghcr.io/piteg/art-games
 
       - name: Push package to docker registry
         run: docker image push ghcr.io/piteg/art-games:latest
