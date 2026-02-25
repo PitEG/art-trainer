@@ -1,0 +1,14 @@
+name: Docker Image
+
+on:
+  push:
+    branches: ["main"]
+
+job:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build docker image
+        run: docker build . -t art-games:latest
