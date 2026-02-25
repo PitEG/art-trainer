@@ -62,7 +62,6 @@ const OddColor = () => {
       <Grid
         color={randomColor}
         oddColor={oddColor}
-        difficulty={1}
         onCorrect={correct}
         onWrong={wrong}
       />
@@ -92,6 +91,21 @@ const OddColor = () => {
     <Container className="odd-color min-vh-100">
       <h1>Odd Color</h1>
       {gameOver ? gameOverScreen : gameScreen}
+    </Container>
+  );
+};
+
+export const OddColorPreview = () => {
+  const color = { l: 0.5, a: -0.12, b: -0.43 };
+  const oddColor = { l: 0.68, a: 0.39, b: 0.64 };
+  return (
+    <Container>
+      <Grid
+        color={color}
+        oddColor={oddColor}
+        onCorrect={() => {}}
+        onWrong={() => {}}
+      />
     </Container>
   );
 };

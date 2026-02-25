@@ -10,7 +10,6 @@ interface Color {
 interface GridProps {
   color: Color;
   oddColor: Color;
-  difficulty: number;
   onCorrect: () => void;
   onWrong: () => void;
 }
