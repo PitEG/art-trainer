@@ -1,3 +1,7 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
 .odd-color-button {
   border-radius: 0;
 }
@@ -6,6 +10,21 @@
   display: grid;
   grid: repeat(3, 1fr) / repeat(3, 1fr);
   height: 450px;
+  width: 500px;
+}
+
+@include media-breakpoint-down(md) {
+  .odd-color-grid {
+    height: 350px;
+    width: 400px;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .odd-color-grid {
+    height: 300px;
+    width: 350px;
+  }
 }
 
 .odd-color-game-over {

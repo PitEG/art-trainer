@@ -15,7 +15,11 @@ const OddColor = () => {
     a: Math.random() * 1.8 - 0.9, // a is between [-0.8,0.8]
     b: Math.random() * 1.8 - 0.9, // b is between [-0.8,0.8]
   };
-  const difficultyModifier = 0.05 * (1.05 - score / SOFT_LEVEL_CAP);
+  const clamp = (v: number, min: number) => {
+    if (v < min) return min;
+    return v;
+  };
+  const difficultyModifier = 0.05 * clamp(1.1 - score / SOFT_LEVEL_CAP, 0.1);
   const offset = (x: number, offset: number) => {
     const sign = Math.random() > 0.5 ? 1 : -1;
     return x + sign * offset;
@@ -43,7 +47,7 @@ const OddColor = () => {
 
   const gameOverScreen = (
     <Container className="odd-color-game-over d-flex row justify-content-center">
-      <h1>GAME OVER, MAN</h1>
+      <h1>GAME OVER</h1>
       <h2> You scored: {score}!</h2>
       <h2> try again? </h2>
       <Button onClick={reset}>
