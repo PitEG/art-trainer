@@ -9,6 +9,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build docker image
-        run: docker build . -t art-games:latest
+        run: docker build . -t ghcr.io/piteg/art-games:latest art-games
+
+      - name: Push package to docker registry
+        run: docker image push ghcr.io/piteg/art-games:latest
