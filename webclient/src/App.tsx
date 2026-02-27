@@ -25,7 +25,10 @@ const App = () => {
         <Route path="/" element={<Root />}>
           <Route index element={<Home />} />
           <Route path="/page" element={<Page />} />
-          <Route path="/oddcolor" element={<OddColor />} />
+          <Route path="/oddcolor">
+            <Route index element={<OddColor />} />
+            <Route path="/oddcolor/daily" element={<OddColor daily />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

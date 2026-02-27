@@ -3,9 +3,13 @@ import { useState } from "react";
 import Grid from "./Grid";
 import "./OddColor.scss";
 
-const SOFT_LEVEL_CAP = 50;
+const SOFT_DIFFICULTY_CAP = 30;
 
-const OddColor = () => {
+interface OddColorProps {
+  daily?: true;
+}
+
+const OddColor = (props: OddColorProps) => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
@@ -19,7 +23,8 @@ const OddColor = () => {
     if (v < min) return min;
     return v;
   };
-  const difficultyModifier = 0.05 * clamp(1.1 - score / SOFT_LEVEL_CAP, 0.1);
+  const difficultyModifier =
+    0.05 * clamp(1.1 - score / SOFT_DIFFICULTY_CAP, 0.15);
   const offset = (x: number, offset: number) => {
     const sign = Math.random() > 0.5 ? 1 : -1;
     return x + sign * offset;
@@ -32,12 +37,13 @@ const OddColor = () => {
 
   const correct = () => {
     setScore(score + 1);
-    console.log("correct");
   };
 
   const wrong = () => {
     setGameOver(true);
-    console.log("wrong");
+    if (props.daily) {
+      console.log("DAILY DONE!");
+    }
   };
 
   const reset = () => {
@@ -58,7 +64,6 @@ const OddColor = () => {
 
   const gameScreen = (
     <Container>
-      <h2 className="text-center display-1">{score}</h2>
       <Grid
         color={randomColor}
         oddColor={oddColor}
@@ -90,6 +95,7 @@ const OddColor = () => {
   return (
     <Container className="odd-color min-vh-100">
       <h1>Odd Color</h1>
+      <h2 className="text-center display-1">{score}</h2>
       {gameOver ? gameOverScreen : gameScreen}
     </Container>
   );
