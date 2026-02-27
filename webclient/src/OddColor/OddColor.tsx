@@ -1,6 +1,6 @@
 import { Button, Container, Accordion } from "react-bootstrap";
-import { useState, useCallback } from "react";
-import { seedRand } from "../util/Rand";
+import { useState } from "react";
+// import { seedRand } from "../util/Rand";
 import Grid from "./Grid";
 import "./OddColor.scss";
 
