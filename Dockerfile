@@ -13,7 +13,6 @@ RUN pnpm fetch --prod
 COPY ./webclient /app
 RUN pnpm install --prod
 RUN pnpm update --prod
-RUN ls
 RUN pnpm build
 
 FROM nginx:stable-alpine-slim
