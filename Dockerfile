@@ -7,12 +7,13 @@ RUN corepack enable
 FROM base AS prod
 
 WORKDIR /app
-COPY pnpm-lock.yaml /app
+COPY ./webclient/pnpm-lock.yaml /app
 RUN pnpm fetch --prod
 
-COPY . /app
+COPY ./webclient /app
 RUN pnpm install --prod
 RUN pnpm update --prod
+RUN ls
 RUN pnpm build
 
 FROM nginx:stable-alpine-slim
