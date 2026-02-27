@@ -1,5 +1,6 @@
 import { Button, Container, Accordion } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { seedRand } from "../util/Rand";
 import Grid from "./Grid";
 import "./OddColor.scss";
 
@@ -12,12 +13,14 @@ interface OddColorProps {
 const OddColor = (props: OddColorProps) => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  // const rand = useCallback(seedRand(500), []);
+  const rand = Math.random;
 
   // select random color
   const randomColor = {
-    l: Math.random() * 0.8 + 0.1, // l is between [0.1,0.9]
-    a: Math.random() * 1.8 - 0.9, // a is between [-0.8,0.8]
-    b: Math.random() * 1.8 - 0.9, // b is between [-0.8,0.8]
+    l: rand() * 0.8 + 0.1, // l is between [0.1,0.9]
+    a: rand() * 1.8 - 0.9, // a is between [-0.8,0.8]
+    b: rand() * 1.8 - 0.9, // b is between [-0.8,0.8]
   };
   const clamp = (v: number, min: number) => {
     if (v < min) return min;
@@ -26,7 +29,7 @@ const OddColor = (props: OddColorProps) => {
   const difficultyModifier =
     0.05 * clamp(1.1 - score / SOFT_DIFFICULTY_CAP, 0.15);
   const offset = (x: number, offset: number) => {
-    const sign = Math.random() > 0.5 ? 1 : -1;
+    const sign = rand() > 0.5 ? 1 : -1;
     return x + sign * offset;
   };
   const oddColor = {
