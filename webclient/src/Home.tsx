@@ -1,4 +1,4 @@
-import { Container, Card, Button } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 import { OddColorPreview } from "./OddColor/OddColor";
 import { Link } from "react-router";
 
