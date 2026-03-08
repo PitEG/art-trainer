@@ -2,6 +2,7 @@ import "./App.scss";
 import { Outlet, BrowserRouter, Routes, Route } from "react-router";
 import { Container } from "react-bootstrap";
 import OddColor from "./OddColor/OddColor";
+import RememberColor from "./RememberColor/RememberColor";
 import TopBar from "./TopBar";
 import Home from "./Home";
 
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/" element={<Root />}>
           <Route index element={<Home />} />
           <Route path="/page" element={<Page />} />
+          <Route path="/remembercolor" element={<RememberColor />} />
           <Route path="/oddcolor">
             <Route index element={<OddColor />} />
             <Route path="/oddcolor/daily" element={<OddColor daily />} />
