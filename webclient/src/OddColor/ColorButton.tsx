@@ -1,7 +1,8 @@
 import { Button } from "react-bootstrap";
+import type { Color } from "util/Color";
 
 interface ColorButtonProps {
-  color: { l: number; a: number; b: number };
+  color: Color;
   action: () => void;
 }
 
@@ -11,8 +12,8 @@ const ColorButton = (props: ColorButtonProps) => {
   const b = props.color.b;
 
   const styles = {
-    background: `lab(${l * 100.0} ${a * 100.0} ${b * 100.0})`,
-    border: `lab(${l * 100.0} ${a * 100.0} ${b * 100.0})`,
+    background: `oklab(${l} ${a} ${b})`,
+    border: `oklab(${l} ${a} ${b})`,
   };
   return (
     <Button

@@ -15,12 +15,16 @@ const OddColor = (props: OddColorProps) => {
   const [gameOver, setGameOver] = useState(false);
   // const rand = useCallback(seedRand(500), []);
   const rand = Math.random;
+  const randRange = (a: number, b: number): number => {
+    const range = b - a;
+    return rand() * range + a;
+  };
 
   // select random color
   const randomColor = {
-    l: rand() * 0.8 + 0.1, // l is between [0.1,0.9]
-    a: rand() * 1.8 - 0.9, // a is between [-0.8,0.8]
-    b: rand() * 1.8 - 0.9, // b is between [-0.8,0.8]
+    l: randRange(0.1, 0.9),
+    a: randRange(-0.38, 0.38),
+    b: randRange(-0.38, 0.38),
   };
   const clamp = (v: number, min: number) => {
     if (v < min) return min;
@@ -32,11 +36,29 @@ const OddColor = (props: OddColorProps) => {
     const sign = rand() > 0.5 ? 1 : -1;
     return x + sign * offset;
   };
+  let randVec = {
+    // l: randRange(-0.5, 0.5), // TODO: oklab isn't a sphere, it's an elipse. l is [0,1] while a and b are [-0.4,0.4]
+    a: randRange(-0.5, 0.5),
+    b: randRange(-0.5, 0.5),
+  };
+  const randVecMag = Math.sqrt(randVec.a ** 2 + randVec.b ** 2);
+  randVec.a = (randVec.a / randVecMag) * difficultyModifier;
+  randVec.b = (randVec.b / randVecMag) * difficultyModifier;
+  console.log(randVec);
+
+  const oddColor = {
+    l: offset(randomColor.l, difficultyModifier),
+    a: randomColor.a + randVec.a,
+    b: randomColor.b + randVec.b,
+  };
+
+  /*
   const oddColor = {
     l: offset(randomColor.l, difficultyModifier),
     a: offset(randomColor.a, difficultyModifier),
     b: offset(randomColor.b, difficultyModifier),
   };
+  */
 
   const correct = () => {
     setScore(score + 1);
@@ -65,6 +87,11 @@ const OddColor = (props: OddColorProps) => {
     </Container>
   );
 
+  const diff = {
+    l: oddColor.l - randomColor.l,
+    a: oddColor.a - randomColor.a,
+    b: oddColor.b - randomColor.b,
+  };
   const gameScreen = (
     <Container>
       <Grid
@@ -86,9 +113,10 @@ const OddColor = (props: OddColorProps) => {
             <p> A:{oddColor.a} </p>
             <p> B:{oddColor.b} </p>
             <h3> diff </h3>
-            <p> L:{oddColor.l - randomColor.l} </p>
-            <p> A:{oddColor.a - randomColor.a} </p>
-            <p> B:{oddColor.b - randomColor.b} </p>
+            <p> L:{diff.l} </p>
+            <p> A:{diff.a} </p>
+            <p> B:{diff.b} </p>
+            <p> AB magnitude: {Math.sqrt(diff.a ** 2 + diff.b ** 2)} </p>
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
